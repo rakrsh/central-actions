@@ -1,0 +1,29 @@
+name: Test custom actions
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./terraform-deploy
+        with:
+          terraform-command: plan
+          terraform-directory: .
+
+  docker-build-push:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./docker-build-push
+        with:
+          registry: docker.io
+          image-name: my-app:latest
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
