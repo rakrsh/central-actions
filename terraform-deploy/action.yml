@@ -1,0 +1,22 @@
+name: "Terraform Deploy"
+description: "Runs Terraform CLI commands in a specified directory."
+inputs:
+  terraform-directory:
+    description: "Path to the Terraform configuration directory."
+    required: false
+    default: "."
+  terraform-command:
+    description: "Terraform command to execute."
+    required: false
+    default: "plan"
+runs:
+  using: "composite"
+  steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Run Terraform
+      run: terraform ${{ inputs.terraform-command }} -chdir="${{ inputs.terraform-directory }}" -input=false
