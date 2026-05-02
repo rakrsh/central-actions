@@ -15,6 +15,9 @@ central-actions/
 ├── docker-build-push/
 │   ├── action.yml
 │   └── README.md
+├── doc-build-deploy/
+│   ├── action.yml
+│   └── README.md
 └── README.md
 ```
 
@@ -22,6 +25,7 @@ central-actions/
 
 - `terraform-deploy` - Runs Terraform CLI commands in a target directory.
 - `docker-build-push` - Builds a Docker image and pushes it to a registry.
+- `doc-build-deploy` - Builds documentation and deploys it to GitHub Pages.
 
 ## Testing
 

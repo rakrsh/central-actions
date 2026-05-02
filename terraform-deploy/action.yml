@@ -19,4 +19,7 @@ runs:
       uses: hashicorp/setup-terraform@v2
 
     - name: Run Terraform
-      run: terraform ${{ inputs.terraform-command }} -chdir="${{ inputs.terraform-directory }}" -input=false
+      shell: bash
+      run: |
+        cd "${{ inputs.terraform-directory }}"
+        terraform ${{ inputs.terraform-command }} -input=false
