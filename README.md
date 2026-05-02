@@ -18,6 +18,12 @@ central-actions/
 ├── doc-build-deploy/
 │   ├── action.yml
 │   └── README.md
+├── docs/
+│   ├── index.md
+│   ├── docker-build-push.md
+│   ├── doc-build-deploy.md
+│   └── terraform-deploy.md
+├── mkdocs.yml
 └── README.md
 ```
 
@@ -26,6 +32,17 @@ central-actions/
 - `terraform-deploy` - Runs Terraform CLI commands in a target directory.
 - `docker-build-push` - Builds a Docker image and pushes it to a registry.
 - `doc-build-deploy` - Builds documentation and deploys it to GitHub Pages.
+
+## Documentation
+
+The repository documentation is hosted with MkDocs and can be built locally with:
+
+```bash
+pip install mkdocs-material
+mkdocs serve
+```
+
+A GitHub Actions workflow is included at `.github/workflows/deploy-docs.yml` to publish the site to GitHub Pages.
 
 ## Testing
 

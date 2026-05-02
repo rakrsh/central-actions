@@ -8,11 +8,11 @@ inputs:
   doc-build-command:
     description: "Command used to build the documentation."
     required: false
-    default: "make html"
+    default: "mkdocs build"
   publish-directory:
     description: "Directory containing built docs to publish."
     required: false
-    default: "./_build/html"
+    default: "./site"
   github-token:
     description: "GitHub token for gh-pages deployment."
     required: true
