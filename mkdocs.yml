@@ -1,0 +1,10 @@
+site_name: central-actions
+site_description: Centralized reusable GitHub Actions for CI/CD workflows.
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Actions:
+      - Terraform Deploy: terraform-deploy.md
+      - Docker Build and Push: docker-build-push.md
+      - Doc Build and Deploy: doc-build-deploy.md
