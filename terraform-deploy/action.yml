@@ -20,4 +20,6 @@ runs:
 
     - name: Run Terraform
       shell: bash
-      run: terraform ${{ inputs.terraform-command }} -chdir="${{ inputs.terraform-directory }}" -input=false
+      run: |
+        cd "${{ inputs.terraform-directory }}"
+        terraform ${{ inputs.terraform-command }} -input=false
