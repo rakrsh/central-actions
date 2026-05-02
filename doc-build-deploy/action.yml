@@ -1,0 +1,35 @@
+name: "Doc Build and Deploy"
+description: "Build documentation and deploy to GitHub Pages."
+inputs:
+  doc-directory:
+    description: "Path to the documentation source directory."
+    required: false
+    default: "."
+  doc-build-command:
+    description: "Command used to build the documentation."
+    required: false
+    default: "make html"
+  publish-directory:
+    description: "Directory containing built docs to publish."
+    required: false
+    default: "./_build/html"
+  github-token:
+    description: "GitHub token for gh-pages deployment."
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Build documentation
+      shell: bash
+      run: |
+        cd "${{ inputs.doc-directory }}"
+        ${{ inputs.doc-build-command }}
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ inputs.github-token }}
+        publish_dir: "${{ inputs.publish-directory }}"
