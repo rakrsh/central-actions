@@ -36,7 +36,9 @@ runs:
         password: ${{ inputs.password }}
 
     - name: Build Docker image
+      shell: bash
       run: docker build -f "${{ inputs.dockerfile }}" -t "${{ inputs.registry }}/${{ inputs.image-name }}" "${{ inputs.context }}"
 
     - name: Push Docker image
+      shell: bash
       run: docker push "${{ inputs.registry }}/${{ inputs.image-name }}"
