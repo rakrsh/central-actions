@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "central-actions"
+version = "0.1.dev0"
+description = "Centralized repository for custom GitHub Actions"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+
+[tool.setuptools]
+packages = []
+
+[tool.semantic_release]
+version_toml = "pyproject.toml"
+commit_parser = "angular"
+tag_format = "v{version}"
