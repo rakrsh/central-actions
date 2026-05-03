@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: ./test-terraform
       - uses: ./terraform-deploy
         with:
           terraform-command: plan
