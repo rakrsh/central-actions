@@ -32,3 +32,11 @@ When generating code, you **must** strictly adhere to the following rules withou
 * In GitHub Actions, boolean inputs are evaluated as strings (`'true'` and `'false'`). Always write conditional logic as:
   ```yaml
   if: ${{ inputs.deploy-now == 'true' }}
+
+### Rule 5: Consistency Across Documentation, Tests, and CI
+* **On every change**, ensure all related artifacts are updated consistently:
+  * Update documentation in `docs/` for any changes to action inputs, outputs, or behavior.
+  * Modify tests in `.github/workflows/test-actions.yml` to validate new or changed functionality.
+  * Update CI/CD workflows (e.g., `deploy-docs.yml`, `release.yml`) if changes affect deployment, testing, or release processes.
+  * Keep `README.md` synchronized with action descriptions and repository structure.
+* This maintains the repository as a reliable, well-documented source of truth for reusable CI/CD assets.
