@@ -14,28 +14,25 @@ jobs:
       - uses: ./terraform-deploy
         with:
           terraform-command: plan
-          terraform-directory: .
+          terraform-directory: ./test-terraform
 
   docker-build-push:
-    if: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./docker-build-push
         with:
           registry: docker.io
-          image-name: my-app:latest
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          image-name: test-app:latest
+          push: false
 
   doc-build-deploy:
-    if: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./doc-build-deploy
         with:
-          doc-directory: "./docs"
-          doc-build-command: "make html"
-          publish-directory: "./docs/_build/html"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          doc-directory: "."
+          doc-build-command: "mkdocs build"
+          publish-directory: "./site"
+          deploy: false
