@@ -15,7 +15,11 @@ inputs:
     default: "./site"
   github-token:
     description: "GitHub token for gh-pages deployment."
-    required: true
+    required: false
+  deploy:
+    description: "Whether to deploy to GitHub Pages."
+    required: false
+    default: "true"
 runs:
   using: "composite"
   steps:
@@ -29,6 +33,7 @@ runs:
         ${{ inputs.doc-build-command }}
 
     - name: Deploy to GitHub Pages
+      if: ${{ inputs.deploy == 'true' && inputs.github-token != '' }}
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ inputs.github-token }}
