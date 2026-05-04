@@ -7,7 +7,7 @@ A reusable GitHub Action to fetch the project version from common configuration 
 ```yaml
 steps:
   - name: Checkout code
-    uses: actions/checkout@v4
+    uses: actions/checkout@v6
 
   - name: Get project version
     id: get_version

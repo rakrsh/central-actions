@@ -48,3 +48,27 @@ central-actions/
 - **README.md**: Keep the main README.md synchronized with action descriptions, repository structure, and usage instructions.
 
 This ensures the repository remains a reliable, well-documented source of truth for reusable CI/CD assets.
+
+## 3. Latest Action Versions
+
+**Always use the latest stable major version for third-party GitHub Actions. For example:**
+
+*   `actions/checkout@v6`
+*   `actions/setup-python@v6`
+*   `hashicorp/setup-terraform@v4`
+*   `docker/login-action@v4`
+*   `docker/build-push-action@v7`
+
+Before proposing an action, verify if a newer major version is available.
+
+## 4. Composite Actions Shell
+
+Every `run` step in a composite action (`action.yml`) **must** include `shell: bash`.
+
+## 5. Boolean Inputs
+
+Remember that GitHub Actions boolean inputs are strings. Always use `if: ${{ inputs.param == 'true' }}`.
+
+## 6. No Hardcoding
+
+Never hardcode secrets, account IDs, or environment-specific strings. Use `inputs` and `secrets`.
