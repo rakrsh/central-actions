@@ -25,8 +25,9 @@ When generating code, you **must** strictly adhere to the following rules withou
   * **Every single `run` step must contain `shell: bash`.**
 * **Reusable Workflows:** Build these when standardizing an entire *job* or complete multi-job pipeline across multiple repositories (e.g., a standard Kubernetes deployment workflow).
 
-### Rule 3: Version Pinning
-* Do not use `@main` or `@master` for third-party actions. Pin to specific major versions (e.g., `actions/checkout@v4`).
+### Rule 3: Version Pinning & Latest Versions
+* Do not use `@main` or `@master` for third-party actions. Pin to specific major versions.
+* **Always use the latest stable major version** of an action (e.g., `actions/checkout@v6`). Check for newer releases before proposing changes.
 
 ### Rule 4: Boolean Input Handling
 * In GitHub Actions, boolean inputs are evaluated as strings (`'true'` and `'false'`). Always write conditional logic as:

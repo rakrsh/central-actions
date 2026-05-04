@@ -10,7 +10,7 @@ jobs:
   terraform-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ./terraform-deploy
         with:
           terraform-command: plan
@@ -19,7 +19,7 @@ jobs:
   docker-build-push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ./docker-build-push
         with:
           registry: docker.io
@@ -29,7 +29,7 @@ jobs:
   doc-build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install MkDocs
         run: pip install mkdocs-material
         shell: bash
@@ -43,7 +43,7 @@ jobs:
   get-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       
       - name: Test pyproject.toml
         run: |
