@@ -11,11 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-      - name: Initialize Terraform
-        run: terraform init
-        working-directory: ./test-terraform
       - uses: ./terraform-deploy
         with:
           terraform-command: plan
@@ -35,9 +30,101 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install MkDocs
+        run: pip install mkdocs-material
+        shell: bash
       - uses: ./doc-build-deploy
         with:
           doc-directory: "."
           doc-build-command: "mkdocs build"
           publish-directory: "./site"
           deploy: false
+
+  get-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Test pyproject.toml
+        run: |
+          mkdir test-pyproject
+          echo '[project]' > test-pyproject/pyproject.toml
+          echo 'version = "1.2.3"' >> test-pyproject/pyproject.toml
+        shell: bash
+
+      - name: Run get-version for pyproject.toml
+        id: pyproject
+        uses: ./get-version
+        with:
+          path: ./test-pyproject
+
+      - name: Verify pyproject.toml version
+        run: |
+          if [ "${{ steps.pyproject.outputs.version }}" != "1.2.3" ]; then
+            echo "Expected 1.2.3, got ${{ steps.pyproject.outputs.version }}"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Test package.json
+        run: |
+          mkdir test-npm
+          echo '{"version": "4.5.6"}' > test-npm/package.json
+        shell: bash
+
+      - name: Run get-version for package.json
+        id: npm
+        uses: ./get-version
+        with:
+          path: ./test-npm
+
+      - name: Verify package.json version
+        run: |
+          if [ "${{ steps.npm.outputs.version }}" != "4.5.6" ]; then
+            echo "Expected 4.5.6, got ${{ steps.npm.outputs.version }}"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Test go.mod
+        run: |
+          mkdir test-go
+          echo 'module example.com/test' > test-go/go.mod
+          echo 'go 1.21' >> test-go/go.mod
+          echo '// version: 7.8.9' >> test-go/go.mod
+        shell: bash
+
+      - name: Run get-version for go.mod
+        id: go
+        uses: ./get-version
+        with:
+          path: ./test-go
+
+      - name: Verify go.mod version
+        run: |
+          if [ "${{ steps.go.outputs.version }}" != "7.8.9" ]; then
+            echo "Expected 7.8.9, got ${{ steps.go.outputs.version }}"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Test go.mod fallback
+        run: |
+          mkdir test-go-fallback
+          echo 'module example.com/test' > test-go-fallback/go.mod
+          echo 'go 1.22' >> test-go-fallback/go.mod
+        shell: bash
+
+      - name: Run get-version for go.mod fallback
+        id: go_fallback
+        uses: ./get-version
+        with:
+          path: ./test-go-fallback
+
+      - name: Verify go.mod fallback version
+        run: |
+          if [ "${{ steps.go_fallback.outputs.version }}" != "1.22" ]; then
+            echo "Expected 1.22, got ${{ steps.go_fallback.outputs.version }}"
+            exit 1
+          fi
+        shell: bash

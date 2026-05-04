@@ -22,4 +22,5 @@ runs:
       shell: bash
       run: |
         cd "${{ inputs.terraform-directory }}"
+        terraform init -input=false
         terraform ${{ inputs.terraform-command }} -input=false

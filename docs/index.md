@@ -9,6 +9,7 @@ This repository contains reusable GitHub Actions for infrastructure, container, 
 - [Terraform Deploy](terraform-deploy.md)
 - [Docker Build and Push](docker-build-push.md)
 - [Doc Build and Deploy](doc-build-deploy.md)
+- [Get Version](get-version.md)
 
 ## Local preview
 
