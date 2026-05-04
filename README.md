@@ -32,6 +32,7 @@ central-actions/
 - `terraform-deploy` - Runs Terraform CLI commands in a target directory.
 - `docker-build-push` - Builds a Docker image and pushes it to a registry.
 - `doc-build-deploy` - Builds documentation and deploys it to GitHub Pages.
+- `get-version` - Fetches project version from pyproject.toml, package.json, or go.mod.
 
 ## Documentation
 

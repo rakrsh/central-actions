@@ -8,3 +8,4 @@ nav:
       - Terraform Deploy: terraform-deploy.md
       - Docker Build and Push: docker-build-push.md
       - Doc Build and Deploy: doc-build-deploy.md
+      - Get Version: get-version.md
