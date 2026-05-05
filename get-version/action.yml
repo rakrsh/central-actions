@@ -30,7 +30,7 @@ runs:
           VERSION=$(jq -r .version "$WORKDIR/package.json" || true)
         elif [ -f "$WORKDIR/go.mod" ]; then
           echo "Found go.mod"
-          # go.mod doesn't have a standard version field. 
+          # go.mod doesn't have a standard version field.
           # Some people use a comment or the 'go' directive for toolchain version.
           # We'll try to find a commented version or fall back to the go version if requested?
           # For now, let's look for a line like '// version: x.y.z' or just the go version.

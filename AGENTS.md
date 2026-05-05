@@ -6,7 +6,7 @@ This file provides context, rules, and constraints for AI agents (Copilot, Curso
 
 ## 1. Repository Purpose
 
-This repository is a centralized source of truth for **reusable GitHub Actions** and **reusable workflows**. It is designed to be imported by downstream application and infrastructure repositories. 
+This repository is a centralized source of truth for **reusable GitHub Actions** and **reusable workflows**. It is designed to be imported by downstream application and infrastructure repositories.
 
 Your goal as an AI agent is to keep code **DRY**, **highly parameterized**, **secure**, and **backwards-compatible**.
 
@@ -21,7 +21,7 @@ When generating code, you **must** strictly adhere to the following rules withou
 * Use `inputs` for dynamic variables and `secrets` for sensitive tokens.
 
 ### Rule 2: Composite Actions vs. Reusable Workflows
-* **Custom (Composite) Actions:** Build these for discrete, reusable *steps* within a job (e.g., setting up a specific toolchain, running tests). 
+* **Custom (Composite) Actions:** Build these for discrete, reusable *steps* within a job (e.g., setting up a specific toolchain, running tests).
   * **Every single `run` step must contain `shell: bash`.**
 * **Reusable Workflows:** Build these when standardizing an entire *job* or complete multi-job pipeline across multiple repositories (e.g., a standard Kubernetes deployment workflow).
 
