@@ -49,6 +49,12 @@ A GitHub Actions workflow is included at `.github/workflows/deploy-docs.yml` to 
 
 A sample workflow is included at `.github/workflows/test-actions.yml` to exercise the actions locally in this repository.
 
+## Release automation
+
+The repository includes a release-please workflow at `.github/workflows/release-please.yml`.
+
+To use it, create a repository secret named `RELEASE_PLEASE_TOKEN` with a personal access token that has `repo` scope. This token is required for the action to create pull requests and tags.
+
 ## Pre-commit
 
 This repository includes a `.pre-commit-config.yaml` file to enforce consistent formatting and catch common issues.
