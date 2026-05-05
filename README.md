@@ -48,3 +48,15 @@ A GitHub Actions workflow is included at `.github/workflows/deploy-docs.yml` to 
 ## Testing
 
 A sample workflow is included at `.github/workflows/test-actions.yml` to exercise the actions locally in this repository.
+
+## Pre-commit
+
+This repository includes a `.pre-commit-config.yaml` file to enforce consistent formatting and catch common issues.
+
+Install and enable it locally with:
+
+```bash
+pip install pre-commit
+pre-commit install
+pre-commit run --all-files
+```
