@@ -1,0 +1,100 @@
+name: 'Generate SBOM'
+description: 'Generates and uploads Software Bill of Materials (SBOM) for multiple languages and a combined SBOM.'
+inputs:
+  path:
+    description: 'Path to scan'
+    required: false
+    default: '.'
+  format:
+    description: 'Format of SBOM (e.g. spdx-json, cyclonedx-json)'
+    required: false
+    default: 'spdx-json'
+  artifact-name:
+    description: 'Name prefix for the uploaded artifacts'
+    required: false
+    default: 'sbom'
+outputs:
+  combined-sbom-path:
+    description: 'Path to the generated combined SBOM'
+    value: ${{ steps.generate.outputs.combined-sbom-path }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Syft
+      shell: bash
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /tmp/syft-bin
+        echo "/tmp/syft-bin" >> $GITHUB_PATH
+
+    - name: Generate SBOMs
+      id: generate
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        FORMAT="${{ inputs.format }}"
+        PREFIX="${{ inputs.artifact-name }}"
+        EXT="json"
+        if [[ "$FORMAT" != *"-json" ]]; then
+          EXT="txt"
+        fi
+
+        mkdir -p sboms
+
+        # Combined
+        echo "Generating combined SBOM..."
+        syft . -o "$FORMAT=sboms/${PREFIX}-combined.$EXT"
+        echo "combined-sbom-path=sboms/${PREFIX}-combined.$EXT" >> $GITHUB_OUTPUT
+
+        # Individual languages
+        if [ -f "package-lock.json" ]; then
+          syft package-lock.json -o "$FORMAT=sboms/${PREFIX}-npm.$EXT"
+        elif [ -f "package.json" ]; then
+          syft package.json -o "$FORMAT=sboms/${PREFIX}-npm.$EXT"
+        fi
+
+        if [ -f "yarn.lock" ]; then
+          syft yarn.lock -o "$FORMAT=sboms/${PREFIX}-yarn.$EXT"
+        fi
+
+        if [ -f "poetry.lock" ]; then
+          syft poetry.lock -o "$FORMAT=sboms/${PREFIX}-python.$EXT"
+        elif [ -f "Pipfile.lock" ]; then
+          syft Pipfile.lock -o "$FORMAT=sboms/${PREFIX}-python.$EXT"
+        elif [ -f "requirements.txt" ]; then
+          syft requirements.txt -o "$FORMAT=sboms/${PREFIX}-python.$EXT"
+        elif [ -f "pyproject.toml" ]; then
+          syft pyproject.toml -o "$FORMAT=sboms/${PREFIX}-python.$EXT"
+        fi
+
+        if [ -f "go.mod" ]; then
+          syft go.mod -o "$FORMAT=sboms/${PREFIX}-go.$EXT"
+        fi
+
+        if [ -f "pom.xml" ]; then
+          syft pom.xml -o "$FORMAT=sboms/${PREFIX}-java-maven.$EXT"
+        fi
+
+        if [ -f "build.gradle" ]; then
+          syft build.gradle -o "$FORMAT=sboms/${PREFIX}-java-gradle.$EXT"
+        elif [ -f "build.gradle.kts" ]; then
+          syft build.gradle.kts -o "$FORMAT=sboms/${PREFIX}-java-gradle.$EXT"
+        fi
+
+        if [ -f "Cargo.lock" ]; then
+          syft Cargo.lock -o "$FORMAT=sboms/${PREFIX}-rust.$EXT"
+        elif [ -f "Cargo.toml" ]; then
+          syft Cargo.toml -o "$FORMAT=sboms/${PREFIX}-rust.$EXT"
+        fi
+
+        if [ -f "Gemfile.lock" ]; then
+          syft Gemfile.lock -o "$FORMAT=sboms/${PREFIX}-ruby.$EXT"
+        fi
+
+        echo "Generated SBOMs:"
+        ls -la sboms/
+
+    - name: Upload SBOM Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.path }}/sboms/
