@@ -128,3 +128,18 @@ jobs:
             exit 1
           fi
         shell: bash
+
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup test script
+        run: |
+          echo "echo 'Running mock tests...'" > test.sh
+          echo "echo 'coverage: 100%'" > coverage.txt
+          chmod +x test.sh
+        shell: bash
+      - uses: ./run-tests
+        with:
+          test-command: ./test.sh
+          coverage-file: coverage.txt
