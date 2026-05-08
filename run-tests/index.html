@@ -11,10 +11,8 @@
       
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../get-version/">
       
-      
-        <link rel="next" href="../docker-build-push/">
       
       
         
@@ -25,7 +23,7 @@
     
     
       
-        <title>Terraform Deploy - central-actions</title>
+        <title>Run Tests - central-actions</title>
       
     
     
@@ -66,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#terraform-deploy" class="md-skip">
+        <a href="#run-tests-and-coverage-action" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Terraform Deploy
+              Run Tests
             
           </span>
         </div>
@@ -271,37 +269,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Terraform Deploy
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../terraform-deploy/" class="md-nav__link">
         
   
   
@@ -317,48 +288,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Inputs
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -452,10 +381,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../run-tests/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run Tests
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -471,6 +427,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -510,6 +519,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -521,10 +541,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#outputs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example
+        Outputs
       
     </span>
   </a>
@@ -548,19 +568,71 @@
 
 
 
-<h1 id="terraform-deploy">Terraform Deploy</h1>
-<p>The <code>terraform-deploy</code> action runs Terraform CLI commands in a target directory.</p>
-<h2 id="inputs">Inputs</h2>
-<ul>
-<li><code>terraform-directory</code> - Path to the Terraform configuration directory. Default: <code>.</code></li>
-<li><code>terraform-command</code> - Terraform command to execute. Default: <code>plan</code></li>
-</ul>
-<h2 id="example">Example</h2>
-<pre><code class="language-yaml">uses: ./terraform-deploy
-with:
-  terraform-directory: &quot;./infra&quot;
-  terraform-command: &quot;plan&quot;
+<h1 id="run-tests-and-coverage-action">Run Tests and Coverage Action</h1>
+<p>A language-agnostic GitHub Composite Action to run unit tests and display coverage details.</p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-yaml">jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: rakrsh/central-actions/run-tests@v1
+        with:
+          test-command: 'npm test -- --coverage'
+          coverage-file: 'coverage/lcov-report/index.html'
 </code></pre>
+<h2 id="inputs">Inputs</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test-command</code></td>
+<td>The command to run tests and generate coverage</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>coverage-file</code></td>
+<td>The path to the generated coverage file (if applicable)</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>working-directory</code></td>
+<td>Working directory for the test command</td>
+<td>No</td>
+<td><code>.</code></td>
+</tr>
+<tr>
+<td><code>fail-on-error</code></td>
+<td>Whether to fail the workflow if tests fail</td>
+<td>No</td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="outputs">Outputs</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test-status</code></td>
+<td>Status of the test run (<code>success</code>, <code>failure</code>, <code>cancelled</code>, or <code>skipped</code>)</td>
+</tr>
+</tbody>
+</table>
 
 
 
