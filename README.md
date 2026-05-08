@@ -22,7 +22,8 @@ central-actions/
 │   ├── index.md
 │   ├── docker-build-push.md
 │   ├── doc-build-deploy.md
-│   └── terraform-deploy.md
+│   ├── terraform-deploy.md
+│   └── run-tests.md
 ├── mkdocs.yml
 └── README.md
 ```
@@ -33,6 +34,7 @@ central-actions/
 - `docker-build-push` - Builds a Docker image and pushes it to a registry.
 - `doc-build-deploy` - Builds documentation and deploys it to GitHub Pages.
 - `get-version` - Fetches project version from pyproject.toml, package.json, or go.mod.
+- `run-tests` - Language-agnostic action to run unit tests and display coverage.
 
 ## Documentation
 

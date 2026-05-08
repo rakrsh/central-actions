@@ -1,0 +1,44 @@
+name: 'Run Tests and Coverage'
+description: 'Language-agnostic action to run unit tests and display coverage'
+inputs:
+  test-command:
+    description: 'The command to run tests and generate coverage'
+    required: true
+  coverage-file:
+    description: 'The path to the generated coverage file (if applicable)'
+    required: false
+  working-directory:
+    description: 'Working directory for the test command'
+    required: false
+    default: '.'
+  fail-on-error:
+    description: 'Whether to fail the workflow if tests fail'
+    required: false
+    default: 'true'
+outputs:
+  test-status:
+    description: 'Status of the test run'
+    value: ${{ steps.run-tests.outcome }}
+runs:
+  using: "composite"
+  steps:
+    - name: Run Tests
+      id: run-tests
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      continue-on-error: ${{ inputs.fail-on-error != 'true' }}
+      run: |
+        echo "Running test command: ${{ inputs.test-command }}"
+        ${{ inputs.test-command }}
+
+    - name: Display Coverage
+      if: ${{ inputs.coverage-file != '' }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ -f "${{ inputs.coverage-file }}" ]; then
+          echo "Coverage details from ${{ inputs.coverage-file }}:"
+          cat "${{ inputs.coverage-file }}"
+        else
+          echo "Coverage file not found at ${{ inputs.coverage-file }}"
+        fi
