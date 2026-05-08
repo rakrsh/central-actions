@@ -23,7 +23,8 @@ central-actions/
 │   ├── docker-build-push.md
 │   ├── doc-build-deploy.md
 │   ├── terraform-deploy.md
-│   └── run-tests.md
+│   ├── run-tests.md
+│   └── generate-sbom.md
 ├── mkdocs.yml
 └── README.md
 ```
@@ -35,6 +36,7 @@ central-actions/
 - `doc-build-deploy` - Builds documentation and deploys it to GitHub Pages.
 - `get-version` - Fetches project version from pyproject.toml, package.json, or go.mod.
 - `run-tests` - Language-agnostic action to run unit tests and display coverage.
+- `generate-sbom` - Generates and uploads SBOMs for multiple languages and a combined SBOM.
 
 ## Documentation
 

@@ -10,3 +10,4 @@ nav:
       - Doc Build and Deploy: doc-build-deploy.md
       - Get Version: get-version.md
       - Run Tests: run-tests.md
+      - Generate SBOM: generate-sbom.md
