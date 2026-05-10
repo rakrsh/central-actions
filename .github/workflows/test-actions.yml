@@ -143,3 +143,37 @@ jobs:
         with:
           test-command: ./test.sh
           coverage-file: coverage.txt
+
+  build-python-wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup mock python project
+        run: |
+          mkdir test-python-proj
+          cat <<EOF > test-python-proj/pyproject.toml
+          [build-system]
+          requires = ["setuptools>=61.0"]
+          build-backend = "setuptools.build_meta"
+
+          [project]
+          name = "test-package"
+          version = "0.1.0"
+          dependencies = []
+          EOF
+          mkdir test-python-proj/test_package
+          touch test-python-proj/test_package/__init__.py
+        shell: bash
+      - uses: ./build-python-wheel
+        id: build
+        with:
+          project-path: ./test-python-proj
+          output-path: dist
+      - name: Verify wheel exists
+        run: |
+          if [ ! -f "${{ steps.build.outputs.wheel-path }}" ]; then
+            echo "Wheel file not found at ${{ steps.build.outputs.wheel-path }}"
+            exit 1
+          fi
+          echo "Found wheel: ${{ steps.build.outputs.wheel-path }}"
+        shell: bash

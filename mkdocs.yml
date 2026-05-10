@@ -11,3 +11,4 @@ nav:
       - Get Version: get-version.md
       - Run Tests: run-tests.md
       - Generate SBOM: generate-sbom.md
+      - Build Python Wheel: build-python-wheel.md
