@@ -10,6 +10,7 @@ This repository contains reusable GitHub Actions for infrastructure, container, 
 - [Docker Build and Push](docker-build-push.md)
 - [Doc Build and Deploy](doc-build-deploy.md)
 - [Get Version](get-version.md)
+- [Build Python Wheel](build-python-wheel.md)
 
 ## Local preview
 

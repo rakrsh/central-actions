@@ -12,6 +12,9 @@ central-actions/
 ├── terraform-deploy/
 │   ├── action.yml
 │   └── README.md
+├── build-python-wheel/
+│   ├── action.yml
+│   └── README.md
 ├── docker-build-push/
 │   ├── action.yml
 │   └── README.md
@@ -36,6 +39,7 @@ central-actions/
 - `doc-build-deploy` - Builds documentation and deploys it to GitHub Pages.
 - `get-version` - Fetches project version from pyproject.toml, package.json, or go.mod.
 - `run-tests` - Language-agnostic action to run unit tests and display coverage.
+- `build-python-wheel` - Builds a Python wheel (.whl) file using the standard build package.
 - `generate-sbom` - Generates and uploads SBOMs for multiple languages and a combined SBOM.
 
 ## Documentation

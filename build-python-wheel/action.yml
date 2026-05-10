@@ -1,0 +1,45 @@
+name: 'Build Python Wheel'
+description: 'Builds a Python wheel (.whl) file using the build package'
+inputs:
+  python-version:
+    description: 'Python version to use'
+    required: false
+    default: '3.12'
+  project-path:
+    description: 'Path to the Python project (containing pyproject.toml or setup.py)'
+    required: false
+    default: '.'
+  output-path:
+    description: 'Directory where the built wheel should be saved'
+    required: false
+    default: 'dist'
+outputs:
+  wheel-path:
+    description: 'The path to the generated wheel file'
+    value: ${{ steps.find_wheel.outputs.wheel_path }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install build tool
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip build
+
+    - name: Build Wheel
+      shell: bash
+      run: |
+        python -m build --wheel --outdir ${{ inputs.output-path }} ${{ inputs.project-path }}
+
+    - name: Find Wheel Path
+      id: find_wheel
+      shell: bash
+      run: |
+        WHEEL_PATH=$(ls ${{ inputs.output-path }}/*.whl | head -n 1)
+        echo "Generated wheel: $WHEEL_PATH"
+        echo "wheel_path=$WHEEL_PATH" >> $GITHUB_OUTPUT
