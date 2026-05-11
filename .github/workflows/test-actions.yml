@@ -20,11 +20,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: ./docker-build-push
+      - name: Test build and push (dry run)
+        uses: ./docker-build-push
         with:
           registry: docker.io
           image-name: test-app:latest
           push: false
+
+      - name: Test build tarball
+        uses: ./docker-build-push
+        with:
+          registry: docker.io
+          image-name: test-app:latest
+          push: false
+          build-tar: "true"
+          tar-name: "test-app.tar"
+          upload-artifact: "true"
+
+      - name: Verify tarball exists
+        run: |
+          if [ ! -f "test-app.tar" ]; then
+            echo "Tarball not found!"
+            exit 1
+          fi
+          echo "Tarball found: test-app.tar"
+        shell: bash
 
   doc-build-deploy:
     runs-on: ubuntu-latest
