@@ -381,6 +381,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-build-and-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Build and Push
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-upload-tarball-artifact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build and Upload Tarball Artifact
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -585,6 +613,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-build-and-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Build and Push
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-upload-tarball-artifact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build and Upload Tarball Artifact
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -607,21 +663,34 @@
 <h1 id="docker-build-and-push">Docker Build and Push</h1>
 <p>The <code>docker-build-push</code> action builds a Docker image and pushes it to a container registry.</p>
 <h2 id="inputs">Inputs</h2>
-<ul>
-<li><code>registry</code> - Container registry to push to. Default: <code>docker.io</code></li>
-<li><code>image-name</code> - Name of the image to build and push.</li>
-<li><code>dockerfile</code> - Dockerfile path. Default: <code>Dockerfile</code></li>
-<li><code>context</code> - Build context path. Default: <code>.</code></li>
-<li><code>username</code> - Registry username.</li>
-<li><code>password</code> - Registry password or token.</li>
-</ul>
+<p>6:
+- <code>registry</code> - Container registry to push to. Default: <code>docker.io</code>
+- <code>image-name</code> - Name of the image to build and push.
+- <code>dockerfile</code> - Dockerfile path. Default: <code>Dockerfile</code>
+- <code>context</code> - Build context path. Default: <code>.</code>
+- <code>username</code> - Registry username.
+- <code>password</code> - Registry password or token.
+- <code>push</code> - Whether to push the image to the registry. Default: <code>true</code>
+- <code>build-tar</code> - Whether to build a tar file of the Docker image. Default: <code>false</code>
+- <code>tar-name</code> - Name of the output tar file. Default: <code>image.tar</code>
+- <code>upload-artifact</code> - Whether to upload the tar file as a GitHub Actions artifact. Default: <code>false</code></p>
 <h2 id="example">Example</h2>
+<h3 id="basic-build-and-push">Basic Build and Push</h3>
 <pre><code class="language-yaml">uses: ./docker-build-push
 with:
   registry: docker.io
   image-name: my-app:latest
   username: ${{ secrets.DOCKER_USERNAME }}
   password: ${{ secrets.DOCKER_PASSWORD }}
+</code></pre>
+<h3 id="build-and-upload-tarball-artifact">Build and Upload Tarball Artifact</h3>
+<pre><code class="language-yaml">uses: ./docker-build-push
+with:
+  image-name: my-app:latest
+  build-tar: &quot;true&quot;
+  tar-name: &quot;my-app-v1.tar&quot;
+  upload-artifact: &quot;true&quot;
+  push: &quot;false&quot;
 </code></pre>
 
 
