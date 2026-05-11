@@ -23,9 +23,21 @@ inputs:
     description: "Registry password or token."
     required: false
   push:
-    description: "Whether to push the image."
+    description: "Whether to push the image to the registry."
     required: false
     default: "true"
+  build-tar:
+    description: "Whether to build a tar file of the Docker image."
+    required: false
+    default: "false"
+  tar-name:
+    description: "Name of the output tar file."
+    required: false
+    default: "image.tar"
+  upload-artifact:
+    description: "Whether to upload the tar file as a GitHub Actions artifact."
+    required: false
+    default: "false"
 runs:
   using: "composite"
   steps:
@@ -48,3 +60,15 @@ runs:
       if: ${{ inputs.push == 'true' && inputs.username != '' && inputs.password != '' }}
       shell: bash
       run: docker push "${{ inputs.registry }}/${{ inputs.image-name }}"
+
+    - name: Build Docker tarball
+      if: ${{ inputs.build-tar == 'true' }}
+      shell: bash
+      run: docker save -o "${{ inputs.tar-name }}" "${{ inputs.registry }}/${{ inputs.image-name }}"
+
+    - name: Upload Docker tarball artifact
+      if: ${{ inputs.upload-artifact == 'true' && inputs.build-tar == 'true' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.tar-name }}
+        path: ${{ inputs.tar-name }}
