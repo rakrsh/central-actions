@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "central-actions"
-version = "0.0.1"
+version = "0.1.0"
 description = "Centralized repository for custom GitHub Actions"
 readme = "README.md"
 requires-python = ">=3.10"

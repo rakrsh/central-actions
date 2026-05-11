@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0](https://github.com/rakrsh/central-actions/compare/central-actions-v0.0.1...central-actions-v0.1.0) (2026-05-11)
+
+
+### Features
+
+* support tar creation ([5dc4233](https://github.com/rakrsh/central-actions/commit/5dc4233efe7eebaac0a33af5739df34f25143b1e))
+
 ## [0.0.1](https://github.com/rakrsh/central-actions/compare/central-actions-v0.0.1...central-actions-v0.0.1) (2026-05-10)
 
 
