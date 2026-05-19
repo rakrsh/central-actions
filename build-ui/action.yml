@@ -18,6 +18,11 @@ inputs:
     description: 'Node.js version to use.'
     required: false
     default: '20'
+  pnpm-version:
+    description: 'Version of pnpm to use if manager is pnpm.'
+    required: false
+    default: '9'
+
 
 runs:
   using: 'composite'
@@ -80,7 +85,8 @@ runs:
       if: ${{ steps.detect.outputs.manager == 'pnpm' }}
       uses: pnpm/action-setup@v4
       with:
-        version: latest
+        version: ${{ inputs.pnpm-version }}
+
 
     - name: Setup Node.js
       uses: actions/setup-node@v6

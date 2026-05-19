@@ -8,6 +8,8 @@ The `build-ui` action builds a UI project using npm, pnpm, or npx. It automatica
 - `package-manager` - The package manager to use (`npm`, `pnpm`, `npx`). Set to `auto` to detect based on lock files. Default: `auto`
 - `build-command` - The command to run to build the UI. Defaults to `npm run build` or `pnpm run build` based on manager.
 - `node-version` - Node.js version to use. Default: `20`
+- `pnpm-version` - Version of pnpm to use if manager is pnpm. Default: `9`
+
 
 ## Example
 
