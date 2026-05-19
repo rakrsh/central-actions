@@ -1,0 +1,111 @@
+name: 'Build UI'
+description: 'Builds a UI project using npm, pnpm, or npx. Automatically detects the package manager if not specified.'
+author: 'Antigravity'
+
+inputs:
+  working-directory:
+    description: 'The directory where the UI project is located.'
+    required: false
+    default: '.'
+  package-manager:
+    description: 'The package manager to use (npm, pnpm, npx). Set to "auto" to detect based on lock files.'
+    required: false
+    default: 'auto'
+  build-command:
+    description: 'The command to run to build the UI. Defaults to "npm run build" or "pnpm run build" based on manager.'
+    required: false
+  node-version:
+    description: 'Node.js version to use.'
+    required: false
+    default: '20'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Determine Package Manager and Command
+      id: detect
+      shell: bash
+      run: |
+        MANAGER="${{ inputs.package-manager }}"
+        WORKDIR="${{ inputs.working-directory }}"
+        
+        cd "$WORKDIR" || exit 1
+        
+        if [ "$MANAGER" = "auto" ]; then
+          if [ -f "pnpm-lock.yaml" ]; then
+            MANAGER="pnpm"
+          elif [ -f "package-lock.json" ]; then
+            MANAGER="npm"
+          elif [ -f "yarn.lock" ]; then
+            MANAGER="yarn"
+          else
+            MANAGER="npm"
+            echo "::notice::No lock file found. Defaulting to npm."
+          fi
+        fi
+        
+        echo "manager=$MANAGER" >> $GITHUB_OUTPUT
+        
+        # Determine build command
+        CMD="${{ inputs.build-command }}"
+        if [ -z "$CMD" ]; then
+          if [ "$MANAGER" = "pnpm" ]; then
+            CMD="pnpm run build"
+          elif [ "$MANAGER" = "yarn" ]; then
+            CMD="yarn build"
+          elif [ "$MANAGER" = "npm" ]; then
+            CMD="npm run build"
+          elif [ "$MANAGER" = "npx" ]; then
+            echo "::error::build-command must be specified when package-manager is npx"
+            exit 1
+          fi
+        fi
+        
+        echo "cmd=$CMD" >> $GITHUB_OUTPUT
+        echo "Selected Manager: $MANAGER"
+        echo "Selected Command: $CMD"
+
+    - name: Setup pnpm
+      if: ${{ steps.detect.outputs.manager == 'pnpm' }}
+      uses: pnpm/action-setup@v4
+      with:
+        version: latest
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: ${{ inputs.node-version }}
+        # Cache is only enabled if manager is npm, pnpm, or yarn
+        cache: ${{ steps.detect.outputs.manager == 'pnpm' && 'pnpm' || (steps.detect.outputs.manager == 'yarn' && 'yarn' || (steps.detect.outputs.manager == 'npm' && 'npm' || '')) }}
+        cache-dependency-path: ${{ inputs.working-directory }}/${{ steps.detect.outputs.manager == 'pnpm' && 'pnpm-lock.yaml' || (steps.detect.outputs.manager == 'yarn' && 'yarn.lock' || 'package-lock.json') }}
+
+    - name: Install dependencies (npm)
+      if: ${{ steps.detect.outputs.manager == 'npm' }}
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}
+        if [ -f "package-lock.json" ]; then
+          npm ci
+        else
+          npm install
+        fi
+
+    - name: Install dependencies (pnpm)
+      if: ${{ steps.detect.outputs.manager == 'pnpm' }}
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}
+        pnpm install --frozen-lockfile || pnpm install
+
+    - name: Install dependencies (yarn)
+      if: ${{ steps.detect.outputs.manager == 'yarn' }}
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}
+        yarn install --frozen-lockfile || yarn install
+
+    - name: Run Build Command
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}
+        ${{ steps.detect.outputs.cmd }}
