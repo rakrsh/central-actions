@@ -62,7 +62,8 @@ runs:
         echo "has_lock=$HAS_LOCK" >> $GITHUB_OUTPUT
 
         # Determine build command
-        CMD="${{ inputs.build-command }}"
+        CMD='${{ inputs.build-command }}'
+
         if [ -z "$CMD" ]; then
           if [ "$MANAGER" = "pnpm" ]; then
             CMD="pnpm run build"
