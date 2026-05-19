@@ -197,3 +197,37 @@ jobs:
           fi
           echo "Found wheel: ${{ steps.build.outputs.wheel-path }}"
         shell: bash
+
+  build-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup mock npm project
+        run: |
+          mkdir test-ui-npm
+          echo '{"name": "test-ui", "scripts": {"build": "echo building npm"}}' > test-ui-npm/package.json
+        shell: bash
+      - uses: ./build-ui
+        with:
+          working-directory: ./test-ui-npm
+
+      - name: Setup mock pnpm project
+        run: |
+          mkdir test-ui-pnpm
+          echo '{"name": "test-ui", "scripts": {"build": "echo building pnpm"}}' > test-ui-pnpm/package.json
+          touch test-ui-pnpm/pnpm-lock.yaml
+        shell: bash
+      - uses: ./build-ui
+        with:
+          working-directory: ./test-ui-pnpm
+
+      - name: Setup mock npx project
+        run: |
+          mkdir test-ui-npx
+        shell: bash
+      - uses: ./build-ui
+        with:
+          working-directory: ./test-ui-npx
+          package-manager: npx
+          build-command: echo "building via npx"
