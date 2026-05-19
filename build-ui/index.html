@@ -11,10 +11,8 @@
       
       
       
-        <link rel="prev" href="../run-tests/">
+        <link rel="prev" href="../build-python-wheel/">
       
-      
-        <link rel="next" href="../build-python-wheel/">
       
       
         
@@ -25,7 +23,7 @@
     
     
       
-        <title>Generate SBOM - central-actions</title>
+        <title>Build UI - central-actions</title>
       
     
     
@@ -66,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#generate-sbom-action" class="md-skip">
+        <a href="#build-ui" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Generate SBOM
+              Build UI
             
           </span>
         </div>
@@ -411,37 +409,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Generate SBOM
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../generate-sbom/" class="md-nav__link">
         
   
   
@@ -457,59 +428,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Inputs
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Outputs
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -547,10 +465,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../build-ui/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build UI
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -566,6 +511,87 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto-detect-package-manager-and-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-detect Package Manager and Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specific-package-manager-and-working-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specific Package Manager and Working Directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-npx-for-custom-build-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using npx for Custom Build Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -605,17 +631,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -627,13 +642,52 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
+  <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Outputs
+        Example
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto-detect-package-manager-and-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-detect Package Manager and Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specific-package-manager-and-working-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specific Package Manager and Working Directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-npx-for-custom-build-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using npx for Custom Build Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -654,65 +708,32 @@
 
 
 
-<h1 id="generate-sbom-action">Generate SBOM Action</h1>
-<p>A language-agnostic GitHub Composite Action to generate and upload Software Bill of Materials (SBOM). It automatically detects various language ecosystems (e.g. Node.js, Python, Go, Java, Rust) and generates an individual SBOM for each detected language, alongside a combined SBOM for the entire repository. It then uploads the generated SBOMs as workflow artifacts.</p>
-<h2 id="usage">Usage</h2>
-<pre><code class="language-yaml">jobs:
-  sbom:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: rakrsh/central-actions/generate-sbom@v1
-        with:
-          format: 'spdx-json'
-          artifact-name: 'my-app-sbom'
-</code></pre>
+<h1 id="build-ui">Build UI</h1>
+<p>The <code>build-ui</code> action builds a UI project using npm, pnpm, or npx. It automatically detects the package manager based on lock files if not specified.</p>
 <h2 id="inputs">Inputs</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Required</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>path</code></td>
-<td>Path to scan</td>
-<td>No</td>
-<td><code>.</code></td>
-</tr>
-<tr>
-<td><code>format</code></td>
-<td>Format of SBOM (e.g. <code>spdx-json</code>, <code>cyclonedx-json</code>)</td>
-<td>No</td>
-<td><code>spdx-json</code></td>
-</tr>
-<tr>
-<td><code>artifact-name</code></td>
-<td>Name prefix for the uploaded artifacts</td>
-<td>No</td>
-<td><code>sbom</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="outputs">Outputs</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>combined-sbom-path</code></td>
-<td>Path to the generated combined SBOM file</td>
-</tr>
-</tbody>
-</table>
+<ul>
+<li><code>working-directory</code> - The directory where the UI project is located. Default: <code>.</code></li>
+<li><code>package-manager</code> - The package manager to use (<code>npm</code>, <code>pnpm</code>, <code>npx</code>). Set to <code>auto</code> to detect based on lock files. Default: <code>auto</code></li>
+<li><code>build-command</code> - The command to run to build the UI. Defaults to <code>npm run build</code> or <code>pnpm run build</code> based on manager.</li>
+<li><code>node-version</code> - Node.js version to use. Default: <code>20</code></li>
+<li><code>pnpm-version</code> - Version of pnpm to use if manager is pnpm. Default: <code>9</code></li>
+</ul>
+<h2 id="example">Example</h2>
+<h3 id="auto-detect-package-manager-and-build">Auto-detect Package Manager and Build</h3>
+<pre><code class="language-yaml">uses: ./build-ui
+</code></pre>
+<h3 id="specific-package-manager-and-working-directory">Specific Package Manager and Working Directory</h3>
+<pre><code class="language-yaml">uses: ./build-ui
+with:
+  working-directory: ./frontend
+  package-manager: pnpm
+</code></pre>
+<h3 id="using-npx-for-custom-build-command">Using npx for Custom Build Command</h3>
+<pre><code class="language-yaml">uses: ./build-ui
+with:
+  package-manager: npx
+  build-command: npx vite build
+</code></pre>
 
 
 
