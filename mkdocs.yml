@@ -12,3 +12,4 @@ nav:
       - Run Tests: run-tests.md
       - Generate SBOM: generate-sbom.md
       - Build Python Wheel: build-python-wheel.md
+      - Build UI: build-ui.md
