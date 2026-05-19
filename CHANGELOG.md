@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/rakrsh/central-actions/compare/central-actions-v0.1.0...central-actions-v0.2.0) (2026-05-19)
+
+
+### Features
+
+* Build UI action ([638e507](https://github.com/rakrsh/central-actions/commit/638e507bc1db42e178f92bf572fa46c29ff19307))
+
 ## [0.1.0](https://github.com/rakrsh/central-actions/compare/central-actions-v0.0.1...central-actions-v0.1.0) (2026-05-11)
 
 
