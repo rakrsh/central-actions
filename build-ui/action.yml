@@ -28,9 +28,9 @@ runs:
       run: |
         MANAGER="${{ inputs.package-manager }}"
         WORKDIR="${{ inputs.working-directory }}"
-        
+
         cd "$WORKDIR" || exit 1
-        
+
         if [ "$MANAGER" = "auto" ]; then
           if [ -f "pnpm-lock.yaml" ]; then
             MANAGER="pnpm"
@@ -43,9 +43,9 @@ runs:
             echo "::notice::No lock file found. Defaulting to npm."
           fi
         fi
-        
+
         echo "manager=$MANAGER" >> $GITHUB_OUTPUT
-        
+
         # Determine build command
         CMD="${{ inputs.build-command }}"
         if [ -z "$CMD" ]; then
@@ -60,7 +60,7 @@ runs:
             exit 1
           fi
         fi
-        
+
         echo "cmd=$CMD" >> $GITHUB_OUTPUT
         echo "Selected Manager: $MANAGER"
         echo "Selected Command: $CMD"
