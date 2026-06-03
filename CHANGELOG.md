@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/rakrsh/central-actions/compare/central-actions-v0.2.0...central-actions-v0.3.0) (2026-06-03)
+
+
+### Features
+
+* Create archive action ([94023f6](https://github.com/rakrsh/central-actions/commit/94023f63be69a105af067d4070f532ce4a07bd56))
+
 ## [0.2.0](https://github.com/rakrsh/central-actions/compare/central-actions-v0.1.0...central-actions-v0.2.0) (2026-05-19)
 
 
