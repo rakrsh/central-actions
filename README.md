@@ -18,7 +18,9 @@ central-actions/
 ├── build-ui/
 │   ├── action.yml
 │   └── README.md
-
+├── create-archive/
+│   ├── action.yml
+│   └── README.md
 ├── docker-build-push/
 │   ├── action.yml
 │   └── README.md
@@ -31,7 +33,8 @@ central-actions/
 │   ├── doc-build-deploy.md
 │   ├── terraform-deploy.md
 │   ├── run-tests.md
-│   └── generate-sbom.md
+│   ├── generate-sbom.md
+│   └── create-archive.md
 ├── mkdocs.yml
 └── README.md
 ```
@@ -46,6 +49,7 @@ central-actions/
 - `build-python-wheel` - Builds a Python wheel (.whl) file using the standard build package.
 - `generate-sbom` - Generates and uploads SBOMs for multiple languages and a combined SBOM.
 - `build-ui` - Builds a UI project using npm, pnpm, or npx.
+- `create-archive` - Creates a zip, tar, or tar.gz archive of a directory or file.
 
 
 ## Documentation
