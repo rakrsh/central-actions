@@ -13,3 +13,4 @@ nav:
       - Generate SBOM: generate-sbom.md
       - Build Python Wheel: build-python-wheel.md
       - Build UI: build-ui.md
+      - Create Archive: create-archive.md

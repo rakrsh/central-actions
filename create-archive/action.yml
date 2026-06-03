@@ -1,0 +1,123 @@
+name: 'Create Archive'
+description: 'Creates a zip, tar, or tar.gz archive of a directory or file, with support for compression levels and optional artifact uploading.'
+author: 'Antigravity'
+
+inputs:
+  path:
+    description: 'Path of the directory or file whose contents are supposed to be archived.'
+    required: false
+    default: '.'
+  type:
+    description: 'The type of archive to create. Supported types: zip, tar, tar.gz'
+    required: false
+    default: 'tar.gz'
+  compression-level:
+    description: 'Compression level (0-9; 0 is no compression, 9 is maximum compression).'
+    required: false
+    default: '6'
+  output-name:
+    description: 'The filename of the created archive. Defaults to archive.<type>.'
+    required: false
+  upload-artifact:
+    description: 'Whether to upload the generated archive as a GitHub Actions artifact (true/false).'
+    required: false
+    default: 'true'
+  artifact-name:
+    description: 'The name under which the artifact is uploaded. Defaults to the output archive filename.'
+    required: false
+
+outputs:
+  archive-path:
+    description: 'The absolute path to the generated archive file.'
+    value: ${{ steps.archive.outputs.archive-path }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Create Archive
+      id: archive
+      shell: bash
+      run: |
+        TARGET_PATH="${{ inputs.path }}"
+        TYPE="${{ inputs.type }}"
+        COMPRESSION_LEVEL="${{ inputs.compression-level }}"
+        OUTPUT_NAME="${{ inputs.output-name }}"
+
+        # Validate compression-level is 0-9
+        if ! [[ "$COMPRESSION_LEVEL" =~ ^[0-9]$ ]]; then
+          echo "::error::Compression level must be a single digit between 0 and 9 (inclusive)."
+          exit 1
+        fi
+
+        # Check supported types
+        if [ "$TYPE" != "zip" ] && [ "$TYPE" != "tar" ] && [ "$TYPE" != "tar.gz" ] && [ "$TYPE" != "tgz" ]; then
+          echo "::error::Unsupported archive type: $TYPE. Supported: zip, tar, tar.gz"
+          exit 1
+        fi
+
+        # Default output-name if not provided
+        if [ -z "$OUTPUT_NAME" ]; then
+          OUTPUT_NAME="archive.${TYPE}"
+        fi
+
+        # Resolve paths
+        mkdir -p "$(dirname "$OUTPUT_NAME")"
+        ABS_OUTPUT_PATH=$(realpath "$OUTPUT_NAME")
+        ABS_TARGET_PATH=$(realpath "$TARGET_PATH")
+
+        if [ ! -e "$ABS_TARGET_PATH" ]; then
+          echo "::error::Target path '$TARGET_PATH' does not exist."
+          exit 1
+        fi
+
+        echo "Archiving '$ABS_TARGET_PATH' as '$ABS_OUTPUT_PATH' using type '$TYPE' (compression level $COMPRESSION_LEVEL)"
+
+        # Use temporary file in RUNNER_TEMP to avoid self-archiving if the output is inside the target path
+        TEMP_OUT="${{ runner.temp }}/archive_$(date +%s)_$$.${TYPE}"
+
+        if [ -f "$ABS_TARGET_PATH" ]; then
+          # Target is a file
+          TARGET_DIR=$(dirname "$ABS_TARGET_PATH")
+          TARGET_FILE=$(basename "$ABS_TARGET_PATH")
+          cd "$TARGET_DIR" || exit 1
+
+          if [ "$TYPE" = "zip" ]; then
+            zip -q -"$COMPRESSION_LEVEL" "$TEMP_OUT" "$TARGET_FILE"
+          elif [ "$TYPE" = "tar" ]; then
+            tar -cf "$TEMP_OUT" "$TARGET_FILE"
+          else
+            tar -cf - "$TARGET_FILE" | gzip -"$COMPRESSION_LEVEL" > "$TEMP_OUT"
+          fi
+        else
+          # Target is a directory
+          cd "$ABS_TARGET_PATH" || exit 1
+
+          if [ "$TYPE" = "zip" ]; then
+            zip -r -q -"$COMPRESSION_LEVEL" "$TEMP_OUT" .
+          elif [ "$TYPE" = "tar" ]; then
+            tar -cf "$TEMP_OUT" .
+          else
+            tar -cf - . | gzip -"$COMPRESSION_LEVEL" > "$TEMP_OUT"
+          fi
+        fi
+
+        # Move temporary archive to target output path
+        mv "$TEMP_OUT" "$ABS_OUTPUT_PATH"
+
+        # Determine artifact name
+        ARTIFACT_NAME="${{ inputs.artifact-name }}"
+        if [ -z "$ARTIFACT_NAME" ]; then
+          ARTIFACT_NAME=$(basename "$ABS_OUTPUT_PATH")
+        fi
+
+        # Set GITHUB_OUTPUTs
+        echo "archive-path=$ABS_OUTPUT_PATH" >> $GITHUB_OUTPUT
+        echo "artifact-name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
+        echo "Successfully created archive at $ABS_OUTPUT_PATH"
+
+    - name: Upload Archive Artifact
+      if: ${{ inputs.upload-artifact == 'true' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.archive.outputs.artifact-name }}
+        path: ${{ steps.archive.outputs.archive-path }}

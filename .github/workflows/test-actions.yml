@@ -231,3 +231,78 @@ jobs:
           working-directory: ./test-ui-npx
           package-manager: npx
           build-command: echo "building via npx"
+
+  create-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup mock project directory to archive
+        run: |
+          mkdir -p test-archive-dir
+          echo "Hello Archive" > test-archive-dir/file1.txt
+          echo "Subdir File" > test-archive-dir/file2.txt
+        shell: bash
+
+      - name: Test Default Archive (tar.gz of dir)
+        id: test_default
+        uses: ./create-archive
+        with:
+          path: ./test-archive-dir
+          output-name: default-archive.tar.gz
+
+      - name: Verify Default Archive
+        run: |
+          if [ ! -f "default-archive.tar.gz" ]; then
+            echo "Default archive not found!"
+            exit 1
+          fi
+          tar -tf default-archive.tar.gz
+          if [ "${{ steps.test_default.outputs.archive-path }}" != "$(realpath default-archive.tar.gz)" ]; then
+            echo "Incorrect archive path output!"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Test Zip Archive
+        id: test_zip
+        uses: ./create-archive
+        with:
+          path: ./test-archive-dir
+          type: zip
+          output-name: zip-archive.zip
+
+      - name: Verify Zip Archive
+        run: |
+          if [ ! -f "zip-archive.zip" ]; then
+            echo "Zip archive not found!"
+            exit 1
+          fi
+          unzip -l zip-archive.zip
+          if [ "${{ steps.test_zip.outputs.archive-path }}" != "$(realpath zip-archive.zip)" ]; then
+            echo "Incorrect archive path output!"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Test Tar Archive of Single File
+        id: test_single_file
+        uses: ./create-archive
+        with:
+          path: ./test-archive-dir/file1.txt
+          type: tar
+          output-name: single-file.tar
+          upload-artifact: 'false'
+
+      - name: Verify Tar Archive of Single File
+        run: |
+          if [ ! -f "single-file.tar" ]; then
+            echo "Single file tar archive not found!"
+            exit 1
+          fi
+          tar -tf single-file.tar
+          if [ "${{ steps.test_single_file.outputs.archive-path }}" != "$(realpath single-file.tar)" ]; then
+            echo "Incorrect archive path output!"
+            exit 1
+          fi
+        shell: bash
