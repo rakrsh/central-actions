@@ -11,10 +11,8 @@
       
       
       
-        <link rel="prev" href="../build-python-wheel/">
+        <link rel="prev" href="../build-ui/">
       
-      
-        <link rel="next" href="../create-archive/">
       
       
         
@@ -25,7 +23,7 @@
     
     
       
-        <title>Build UI - central-actions</title>
+        <title>Create Archive - central-actions</title>
       
     
     
@@ -66,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#build-ui" class="md-skip">
+        <a href="#create-archive" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Build UI
+              Create Archive
             
           </span>
         </div>
@@ -467,6 +465,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -486,7 +512,7 @@
   <span class="md-ellipsis">
     
   
-    Build UI
+    Create Archive
   
 
     
@@ -504,7 +530,7 @@
   <span class="md-ellipsis">
     
   
-    Build UI
+    Create Archive
   
 
     
@@ -541,6 +567,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -553,10 +590,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#auto-detect-package-manager-and-build" class="md-nav__link">
+  <a href="#default-archive-targz-of-current-workspace-uploaded" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Auto-detect Package Manager and Build
+        Default Archive (tar.gz of current workspace, uploaded)
       
     </span>
   </a>
@@ -564,10 +601,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#specific-package-manager-and-working-directory" class="md-nav__link">
+  <a href="#create-a-zip-archive-of-a-specific-folder" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Specific Package Manager and Working Directory
+        Create a zip archive of a specific folder
       
     </span>
   </a>
@@ -575,10 +612,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-npx-for-custom-build-command" class="md-nav__link">
+  <a href="#create-a-high-compression-targz-archive-of-a-single-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using npx for Custom Build Command
+        Create a high-compression tar.gz archive of a single file
       
     </span>
   </a>
@@ -594,34 +631,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../create-archive/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Create Archive
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -672,6 +681,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -684,10 +704,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#auto-detect-package-manager-and-build" class="md-nav__link">
+  <a href="#default-archive-targz-of-current-workspace-uploaded" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Auto-detect Package Manager and Build
+        Default Archive (tar.gz of current workspace, uploaded)
       
     </span>
   </a>
@@ -695,10 +715,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#specific-package-manager-and-working-directory" class="md-nav__link">
+  <a href="#create-a-zip-archive-of-a-specific-folder" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Specific Package Manager and Working Directory
+        Create a zip archive of a specific folder
       
     </span>
   </a>
@@ -706,10 +726,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-npx-for-custom-build-command" class="md-nav__link">
+  <a href="#create-a-high-compression-targz-archive-of-a-single-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using npx for Custom Build Command
+        Create a high-compression tar.gz archive of a single file
       
     </span>
   </a>
@@ -738,31 +758,45 @@
 
 
 
-<h1 id="build-ui">Build UI</h1>
-<p>The <code>build-ui</code> action builds a UI project using npm, pnpm, or npx. It automatically detects the package manager based on lock files if not specified.</p>
+<h1 id="create-archive">Create Archive</h1>
+<p>The <code>create-archive</code> action creates a <code>zip</code>, <code>tar</code>, or <code>tar.gz</code> archive of a target directory or file, with support for compression levels and optional automatic uploading as a GitHub Actions workflow artifact.</p>
 <h2 id="inputs">Inputs</h2>
 <ul>
-<li><code>working-directory</code> - The directory where the UI project is located. Default: <code>.</code></li>
-<li><code>package-manager</code> - The package manager to use (<code>npm</code>, <code>pnpm</code>, <code>npx</code>). Set to <code>auto</code> to detect based on lock files. Default: <code>auto</code></li>
-<li><code>build-command</code> - The command to run to build the UI. Defaults to <code>npm run build</code> or <code>pnpm run build</code> based on manager.</li>
-<li><code>node-version</code> - Node.js version to use. Default: <code>20</code></li>
-<li><code>pnpm-version</code> - Version of pnpm to use if manager is pnpm. Default: <code>9</code></li>
+<li><code>path</code> - Path of the directory or file whose contents are supposed to be archived. Default: <code>.</code></li>
+<li><code>type</code> - The type of archive to create. Supported types: <code>zip</code>, <code>tar</code>, <code>tar.gz</code>. Default: <code>tar.gz</code></li>
+<li><code>compression-level</code> - Compression level (<code>0-9</code>; <code>0</code> is no compression, <code>9</code> is maximum compression). Default: <code>6</code></li>
+<li><code>output-name</code> - The filename of the created archive. Defaults to <code>archive.&lt;type&gt;</code>.</li>
+<li><code>upload-artifact</code> - Whether to upload the generated archive as a GitHub Actions artifact (<code>true</code>/<code>false</code>). Default: <code>true</code></li>
+<li><code>artifact-name</code> - The name under which the artifact is uploaded. Defaults to the output archive filename.</li>
+</ul>
+<h2 id="outputs">Outputs</h2>
+<ul>
+<li><code>archive-path</code> - The absolute path to the generated archive file.</li>
 </ul>
 <h2 id="example">Example</h2>
-<h3 id="auto-detect-package-manager-and-build">Auto-detect Package Manager and Build</h3>
-<pre><code class="language-yaml">uses: ./build-ui
+<h3 id="default-archive-targz-of-current-workspace-uploaded">Default Archive (tar.gz of current workspace, uploaded)</h3>
+<pre><code class="language-yaml">- name: Archive workspace
+  uses: ./create-archive
 </code></pre>
-<h3 id="specific-package-manager-and-working-directory">Specific Package Manager and Working Directory</h3>
-<pre><code class="language-yaml">uses: ./build-ui
-with:
-  working-directory: ./frontend
-  package-manager: pnpm
+<h3 id="create-a-zip-archive-of-a-specific-folder">Create a zip archive of a specific folder</h3>
+<pre><code class="language-yaml">- name: Zip build outputs
+  uses: ./create-archive
+  with:
+    path: ./dist
+    type: zip
+    output-name: build-outputs.zip
+    upload-artifact: 'true'
+    artifact-name: frontend-build
 </code></pre>
-<h3 id="using-npx-for-custom-build-command">Using npx for Custom Build Command</h3>
-<pre><code class="language-yaml">uses: ./build-ui
-with:
-  package-manager: npx
-  build-command: npx vite build
+<h3 id="create-a-high-compression-targz-archive-of-a-single-file">Create a high-compression tar.gz archive of a single file</h3>
+<pre><code class="language-yaml">- name: Archive production binary
+  uses: ./create-archive
+  with:
+    path: ./bin/server
+    type: tar.gz
+    compression-level: '9'
+    output-name: server-bin.tar.gz
+    upload-artifact: 'false'
 </code></pre>
 
 
