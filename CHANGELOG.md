@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/rakrsh/central-actions/compare/central-actions-v0.3.0...central-actions-v0.4.0) (2026-07-11)
+
+
+### Features
+
+* Docker build scan push workflow ([a51db36](https://github.com/rakrsh/central-actions/commit/a51db36e5200c69f71bee39b1dec3a7a67a66008))
+
 ## [0.3.0](https://github.com/rakrsh/central-actions/compare/central-actions-v0.2.0...central-actions-v0.3.0) (2026-06-03)
 
 
