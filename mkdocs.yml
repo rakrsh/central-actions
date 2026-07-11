@@ -7,6 +7,7 @@ nav:
   - Actions:
       - Terraform Deploy: terraform-deploy.md
       - Docker Build and Push: docker-build-push.md
+      - Docker Build, Scan, and Push: docker-build-scan-push.md
       - Doc Build and Deploy: doc-build-deploy.md
       - Get Version: get-version.md
       - Run Tests: run-tests.md

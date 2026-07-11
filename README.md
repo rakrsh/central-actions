@@ -8,7 +8,8 @@ Centralized repository for your custom GitHub Actions.
 central-actions/
 ├── .github/
 │   └── workflows/
-│       └── test-actions.yml
+│       ├── test-actions.yml
+│       └── docker-build-scan-push.yml
 ├── terraform-deploy/
 │   ├── action.yml
 │   └── README.md
@@ -43,6 +44,7 @@ central-actions/
 
 - `terraform-deploy` - Runs Terraform CLI commands in a target directory.
 - `docker-build-push` - Builds a Docker image and pushes it to a registry.
+- `docker-build-scan-push` (Reusable Workflow) - Builds a multi-platform Docker image, caches it, scans it with Trivy, and pushes it to a registry.
 - `doc-build-deploy` - Builds documentation and deploys it to GitHub Pages.
 - `get-version` - Fetches project version from pyproject.toml, package.json, or go.mod.
 - `run-tests` - Language-agnostic action to run unit tests and display coverage.
