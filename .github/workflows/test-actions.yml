@@ -46,6 +46,16 @@ jobs:
           echo "Tarball found: test-app.tar"
         shell: bash
 
+  test-docker-scan-push:
+    uses: ./.github/workflows/docker-build-scan-push.yml
+    with:
+      registry: docker.io
+      image-name: test-app
+      push: 'false'
+      platforms: linux/amd64
+      tags: test-tag
+
+
   doc-build-deploy:
     runs-on: ubuntu-latest
     steps:

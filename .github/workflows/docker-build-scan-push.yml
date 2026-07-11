@@ -1,0 +1,120 @@
+name: "Docker Build, Scan, and Push"
+on:
+  workflow_call:
+    inputs:
+      registry:
+        description: "Container registry to push to."
+        required: false
+        type: string
+        default: "docker.io"
+      image-name:
+        description: "Name of the image to build and push."
+        required: true
+        type: string
+      dockerfile:
+        description: "Dockerfile path."
+        required: false
+        type: string
+        default: "Dockerfile"
+      context:
+        description: "Build context path."
+        required: false
+        type: string
+        default: "."
+      platforms:
+        description: "Target architectures (e.g., linux/amd64,linux/arm64)."
+        required: false
+        type: string
+        default: "linux/amd64"
+      fail-on-critical:
+        description: "Fail the workflow if CRITICAL vulnerabilities are found."
+        required: false
+        type: string
+        default: "true"
+      push:
+        description: "Whether to push the image to the registry."
+        required: false
+        type: string
+        default: "true"
+      tags:
+        description: "Comma-separated list of image tags (e.g. latest, v1.0.0)."
+        required: false
+        type: string
+        default: "latest"
+    secrets:
+      registry-username:
+        description: "Registry username."
+        required: false
+      registry-password:
+        description: "Registry password or token."
+        required: false
+
+jobs:
+  build-scan-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to registry
+        if: ${{ inputs.push == 'true' && secrets.registry-username != '' && secrets.registry-password != '' }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ inputs.registry }}
+          username: ${{ secrets.registry-username }}
+          password: ${{ secrets.registry-password }}
+
+      - name: Parse tags for full image reference
+        id: meta
+        shell: bash
+        run: |
+          TAGS="${{ inputs.tags }}"
+          FULL_TAGS=""
+          FIRST_TAG=""
+          IFS=',' read -ra ADDR <<< "$TAGS"
+          for i in "${ADDR[@]}"; do
+            TRIMMED=$(echo "$i" | xargs)
+            if [ -z "$FIRST_TAG" ]; then
+              FIRST_TAG="${{ inputs.registry }}/${{ inputs.image-name }}:$TRIMMED"
+            fi
+            FULL_TAGS="$FULL_TAGS${{ inputs.registry }}/${{ inputs.image-name }}:$TRIMMED,"
+          done
+          # Remove trailing comma
+          FULL_TAGS=${FULL_TAGS%,}
+          echo "first_tag=$FIRST_TAG" >> $GITHUB_OUTPUT
+          echo "full_tags=$FULL_TAGS" >> $GITHUB_OUTPUT
+
+      - name: Build local image for scanning
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ inputs.context }}
+          file: ${{ inputs.dockerfile }}
+          load: true
+          tags: ${{ steps.meta.outputs.first_tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ steps.meta.outputs.first_tag }}
+          format: 'table'
+          exit-code: ${{ inputs.fail-on-critical == 'true' && '1' || '0' }}
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL'
+
+      - name: Build multi-platform and push
+        if: ${{ inputs.push == 'true' }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ inputs.context }}
+          file: ${{ inputs.dockerfile }}
+          push: true
+          platforms: ${{ inputs.platforms }}
+          tags: ${{ steps.meta.outputs.full_tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
